@@ -1,0 +1,180 @@
+db.profiles.find({})
+  .forEach(function (doc) {
+    doc.createdAt=new Date(doc.createdAt);
+    doc.updatedAt=new Date(doc.updatedAt);
+    doc.elasticId=doc._id;
+    doc.products.forEach(function (event) {
+        event._id=ObjectId();
+        event.elasticId=ObjectId();
+    });
+        doc.projects.forEach(function (event) {
+        event._id=ObjectId();
+        event.elasticId=ObjectId();
+    });
+    db.profiles.save(doc);
+  });
+
+  // updating all values
+
+db.profiles.update( {}, { $rename: { 'email': 'companyEmail'} }, {multi: true} )
+
+
+// Removal Query
+
+  db.profiles.remove({
+  "companyStatus":"Passive"})
+
+    db.profiles.remove({
+  "companyStatus":"Preliminary"})
+
+   db.profiles.remove({
+  "companyStatus":"Preliminary "})
+
+
+  // Update Profiles
+
+  db.profiles.find({ companyStatus: { $ne: 'Active' } })
+  .forEach(function (doc) {
+    doc.createdAt=new Date(doc.createdAt);
+    doc.updatedAt=new Date(doc.updatedAt);
+    doc.elasticId=ObjectId();
+    doc.companyId=ObjectId();
+    doc.products.forEach(function (event) {
+        event._id=ObjectId();
+        event.elasticId=ObjectId();
+    });
+    db.profiles.save(doc);
+  });
+
+  db.profiles.find({ companyStatus: { $ne: 'Active' } })
+  .forEach(function (doc) {
+      if(Object.keys(doc).length !==71) {
+           console.log(doc.elasticId)
+      }
+  });
+
+db.profiles.find({"businessType.typeValues": {$elemMatch: {value:{$nin: [/Natural resource provider/, /Manufacturer/, /Software producer/, /Technology Provider/, /Service Provider/, /Consultant/, "Start Up Incubator/Accelerator", "Startup Incubator/Accelerator", /Distributor/, /Broker/, /Wholesaler/, /WholeSaler/,  /Retailer/, /Incubator Accelerator/, /Investor/, /Company Builder/, /Other/, /Agency/, /Craftsman/]}}}})
+
+//classic Query
+//db.profiles.find({
+//   "businessType.typeValues.0.value":"Software producer"
+//})
+
+db.profiles.find({"organizationType.typeValues": {$nin: [/Startup/, /Small Enterprise/, "Internet of Things", "", /Medium-sized Enterprise/, /Multinational company/, "NGO/non-profit organisation", /Open Source Project/, "University", "Governmental Institution", /Industry Association/, /Public-private hybrid/, /Think tank/, /Investor/,  /Other/]}})
+
+Internet of Things
+
+db.profiles.update(
+    {"businessType.typeValues":
+    {$elemMatch: 
+     {value:
+       {$nin: [/Natural resource provider/, /Manufacturer/, /Software producer/, /Technology Provider/, /Service Provider/, /Consultant/, "Start Up Incubator/Accelerator", "Startup Incubator/Accelerator", /Distributor/, /Broker/, /Wholesaler/, /WholeSaler/,  /Retailer/, /Incubator Accelerator/, /Investor/, /Company Builder/, /Other/, /Agency/, /Craftsman/]}
+     }
+    }},
+    {$set: {'businessType.typeValues.$.values': ''}})
+
+
+db.profiles.update(
+    {"organizationType.typeValues": {$in: ["Internet of Things"]}},
+    {
+            $set: {
+                "organizationType.typeValues": ""
+            }
+        }, {
+            multi: true
+        }
+    )
+
+
+db.profiles.update(
+    {"partnerSearch.$.meta.name":'partnerSearch'},
+    {$set: {'partnerSearch.$.meta.display': 'none'}}, {
+            multi: true
+        })
+
+
+db.profiles.update(
+    {"subSector.typeValues":
+    {$elemMatch: 
+     {value:
+       {$nin: ['Oil & Gas Drilling', 'Oil & Gas Equipment & Services', 'Integrated Oil & Gas', 'Oil & Gas Exploration & Production', 'Oil & Gas Refining & Marketing', 'Oil & Gas Storage & Transportation', 'Coal & Consumable Fuels', 'Commodity Chemicals', 'Diversified Chemicals', 'Fertilizers & Agricultural Chemicals', 'Industrial Gases', 'Specialty Chemicals',
+       'Metal & Glass Containers', 'Paper Packaging', 'Aluminum', 'Diversified Metals & Mining', 'Gold', 'Precious Metals & Minerals', 'Silver', 'Steel', 'Forest Products', 'Paper Products', 'Electrical Components & Equipment', 'Heavy Electrical Equipment', 'Construction Machinery & Heavy Trucks', 'Agricultural & Farm Machinery', 'Industrial Machinery', "",
+       'Commercial Printing', 'Data Processing Services', 'Diversified Commercial & Professional Services', 'Environmental & Facilities Services', 'Office Services & Supplies', 'Diversified Support Services', 'Security & Alarm Services','Human Resource & Employment Services', 'Research & Consulting Services',
+       'Air Freight & Logistics', 'Airlines', 'Marine', 'Road & Rail', 'Transportation Infrastructure','Auto Parts & Equipment', 'Tires & Rubber','Automobile Manufacturers', 'Motorcycle Manufacturers', 'Consumer Electronics', 'Home Furnishings', 'Homebuilding', 'Household Appliances', 'Housewares & Specialties',
+       'Apparel, Accessories & Luxury Goods', 'Footwear', 'Textiles', "", 'Casinos & Gaming', 'Hotels, Resorts & Cruise Lines', 'Leisure Facilities', 'Restaurants', 'Education Services', 'Specialized Consumer Services', 'Advertising', 'Broadcasting', 'Cable & Satellite', 'Movies & Entertainment', 'Publishing',
+       'Catalog Retail', 'Internet Retail', 'Department Stores', 'General Merchandise Stores', 'Apparel Retail', 'Computer & Electronics Retail', 'Home Improvement Retail', 'Specialty Stores', 'Automotive Retail', 'Homefurnishing Retail',
+       'Drug Retail', 'Food Distributors', 'Food Retail', 'Hypermarkets & Super Centers','Brewers', 'Distillers & Vintners', 'Soft Drinks', 'Agricultural Products', 'Meat, Poultry & Fish', 'Packaged Foods & Meats',
+       'Household Products', 'Personal Products', 'Health Care Equipment', 'Health Care Supplies', 'Health Care Distributors', 'Health Care Services', 'Health Care Facilities', 'Managed Health Care',
+       'Diversified Banks', 'Regional Banks','Diversified Real Estate Activities', 'Real Estate Operating Companies', 'Real Estate Development', 'Real Estate Services',
+       'Industrial REITs', 'Hotel & Resort REITs', 'Office REITs', 'Health Care REITs', 'Residential REITs', 'Retail REITs', 'Specialized REITs',
+       'Independent Power Producers & Energy Traders', 'Renewable Electricity',
+       'Alternative Carriers', 'Integrated Telecommunication Services',
+       'Semiconductor Equipment', 'Semiconductors',
+       'Electronic Equipment & Instruments', 'Electronic Components', 'Electronic Manufacturing Services', 'Technology Distributors',
+       'Communications Equipment', 'Networking Equipment', 'Telecommunications Equipment', 'Computer Hardware', 'Computer Storage & Peripherals', 'Technology Hardware, Storage & Peripherals',
+       'Application Software', 'Systems Software', 'Home Entertainment Software',
+       'IT Consulting & Other Services', 'Data Processing & Outsourced Services',
+       'Insurance Brokers', 'Life & Health Insurance', 'Multi-line Insurance', 'Property & Casualty Insurance', 'Reinsurance',
+        'Internet Software & Services',
+       'Asset Management & Custody Banks', 'Investment Banking & Brokerage', 'Diversified Capital Markets',
+       'Consumer Finance', 'Other Diversified Financial Services', 'Multi-Sector Holdings', 'Specialized Finance',
+       'Diversified Banks', 'Regional Banks',
+       'Thrifts & Mortgage Finance'
+       ]}
+     }}},
+     {$set: {'businessType.typeValues': []}}, {
+            multi: true
+        }
+    )
+
+
+var counter = 0;
+  db.profiles.find({})
+  .forEach(function (doc) {
+    doc.products.forEach(function (event) {
+       if(event.technologyField !=='') {
+             counter ++
+           }
+        }
+    );
+      print(counter);
+  });
+
+    db.profiles.find({})
+  .forEach(function (doc) {
+    doc.products.forEach(function (event) {
+       if(event.technologyField) {
+            if(event.technologyField.typeValues) {
+                if(event.technologyField.typeValues) {
+                    event.productClass.typeValues = event.technologyField.typeValues;
+                    event.technologyField.typeValues = [];
+                }}}
+        }
+    );
+     db.profiles.save(doc);
+  });
+
+     "country": {
+            "typeValues": [],
+            "type": "dropdownMultiple"
+        },
+
+
+
+
+    db.searches.find({})
+  .forEach(function (doc) {
+    doc.productDetailSearch.forEach(function (event) {
+       if(event.fields) {
+           if(event.fields.businessObjective) {
+         event.fields.businessObjective.type = 'dropdownMultiple'
+               
+               
+               
+           }
+        }
+    }
+    );
+    
+     db.searches.save(doc);
+  });

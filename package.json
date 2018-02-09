@@ -1,0 +1,32 @@
+{
+  "name": "digitalpartners-data",
+  "version": "1.0.0",
+  "description": "This project includes - Java implementation of the AlchemyAPI SDK - Google Search Results Scrapper - Linkedin Scrapper - Web crawlers - To extract company and product urls from given url",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dblocal": "./Passive-DataUpload/controller/db_local.sh",
+    "passiveConvert": "node Passive-DataUpload/controller/profile.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/david-chh/DigitalPartners-Data.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/david-chh/DigitalPartners-Data/issues"
+  },
+  "homepage": "https://github.com/david-chh/DigitalPartners-Data#readme",
+  "dependencies": {
+    "agenda": "^0.9.1",
+    "jsonfile": "2.4.0",
+    "lodash": "4.17.4",
+    "mongo-xlsx": "1.0.12",
+    "mongoose": "4.9.5",
+    "next": "^3.0.6",
+    "osmosis": "^1.1.4",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
+}

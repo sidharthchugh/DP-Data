@@ -1,0 +1,18 @@
+misc:
+    dindex:
+        name: dp-web-prod
+        as: elastic_digital
+    ctype:
+        name: profiles
+        as: profiles
+mongo:
+    host: sidharthchugh.documents.azure.com
+    port: 10255
+    query: "{ 'companyStatus' : 'Passive'}"
+    auth:
+        user: sidharthchugh
+        pwd: 'iQraGoevYHgcRAo3ePhHyvIh6YHuEkbou3oJVb2uVSOV15iC8P7d0uu8PiSGv8mIIxGfo3HL0AuGgzmr4R34FQ=='
+        source: dp-web-prod    
+elastic:
+    host: 46.101.124.85
+    port: 9200

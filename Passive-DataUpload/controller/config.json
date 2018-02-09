@@ -1,0 +1,47 @@
+{
+  "controls": {
+    "mongodbReadCapacity": 10000,
+    "elasticsearchBulkSize": 5000,
+    "indexNameSuffix": "_v1"
+  },
+  "mongodb": {
+    "url": "mongodb://sidharthchugh:iQraGoevYHgcRAo3ePhHyvIh6YHuEkbou3oJVb2uVSOV15iC8P7d0uu8PiSGv8mIIxGfo3HL0AuGgzmr4R34FQ==@sidharthchugh.documents.azure.com:10255/dp-web-prod?ssl=true",
+    "options": {
+      "readPreference": "secondaryPreferred"
+    }
+  },
+  "elasticsearch": {
+    "options": {
+      "host": "http://46.101.124.85:9200",
+      "apiVersion": "5.4"
+    }
+  },
+  "tasks": [
+    {
+      "from": {
+        "phase": "scan",
+        "time": 0
+      },
+      "extract": {
+        "db": "dp-web-prod",
+        "collection": "profiles"
+      },
+      "load": {
+        "index": "index0",
+        "type": "type0",
+          "body": {
+          "dynamic": false,
+          "properties": {
+            "property0": {
+              "type": "text",
+              "norms": false
+            },
+            "property1": {
+              "type": "keyword"
+            }
+          }
+        }
+      }
+    }
+  ]
+}
